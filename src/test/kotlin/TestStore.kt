@@ -1,3 +1,4 @@
+import bronze.baekjun5086
 import siver.baekjun2960
 
 @Suppress("unused")
@@ -13,7 +14,7 @@ class TestStore {
                 "neither"
 
         assertEqualLines(input, output){
-            baekjun2960(input)
+            baekjun5086(input)
         }
     }
 
