@@ -1,22 +1,32 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import siver.baekjun2960
+import siver.baekjun4948
 
 
 class MainKtTest {
 
     @Test
     fun run() {
-        val input = "7 3\n" +
-                "15 12\n" +
-                "10 7"
+        val input = "1\n" +
+                "10\n" +
+                "13\n" +
+                "100\n" +
+                "1000\n" +
+                "10000\n" +
+                "100000"
 
-        val output = "6\n" +
-                "7\n" +
-                "9"
+        val output = "1\n" +
+                "4\n" +
+                "3\n" +
+                "21\n" +
+                "135\n" +
+                "1033\n" +
+                "8392"
 
-        assertEqualLines(input, output){
-            baekjun2960(it)
+
+        baekjun4948(input.toLine()).forEachIndexed {idx, _->
+            assertEquals(input[idx],output[idx])
         }
     }
 }

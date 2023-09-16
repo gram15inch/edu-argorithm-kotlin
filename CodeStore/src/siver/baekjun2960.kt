@@ -30,7 +30,7 @@ fun baekjun2960(input:String):String {
     var latestDelete = 0
 
     var pRotaion = 0
-    //모든수를 지우거나 K번째까지 지우거나
+    //모든수를 지우지 않았으면서 지운갯수가 K번째 전일때
     while ((countOfDelete < K) &&
         (countOfDelete < range.size)) {
 

@@ -1,3 +1,4 @@
+import siver.baekjun4948
 import java.io.BufferedWriter
 
 
@@ -6,12 +7,15 @@ fun main(args: Array<String>) {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
-    val result= mutableListOf<String>()
+    var line = br.readLine()
+    val lines = mutableListOf<String>()
 
-    val line = br.readLine()
-   // result.add()
+    while (line!="0"){
+        lines.add(line)
+        line = br.readLine()
+    }
 
-    bw.printLines(result)
+    bw.printLines(baekjun4948(lines))
 }
 
 
