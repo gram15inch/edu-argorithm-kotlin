@@ -20,11 +20,12 @@ fun bubbleSort2(arr: IntArray): IntArray {
    var sortedCount = 0
     do{
         var select = MOVE_ONE_FROM_START
+        val latestSorted  = arr.size - sortedCount
         do{
             if(selectSmallerThanBefore(arr, select))
                 switchAtoB(arr, getBeforeIdx(select), select)
         }
-        while (++select < arr.size - sortedCount)
+        while (++select < latestSorted)
     }while (++sortedCount < arr.size)
     return arr
 }
