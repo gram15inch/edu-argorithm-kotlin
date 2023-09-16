@@ -16,3 +16,30 @@ fun selectionSort(arr: IntArray) {
         }
     }
 }
+
+
+fun selectionSort2(arr: IntArray):IntArray  {
+
+    var select = 0
+    do{
+        val smallest = getSmallestFromStart(arr, select)
+        switchAtoB(arr, select, smallest)
+    }while (++select < arr.size)
+
+    return arr
+}
+
+private fun getSmallestFromStart(array:IntArray, start :Int):Int{
+    var smallest = start
+    var select = start + 1
+    if (select >= array.size)
+        return start
+
+    do{
+        if (array[smallest] > array[select])
+            smallest = select
+    } while (++select < array.size)
+
+    return smallest
+}
+
