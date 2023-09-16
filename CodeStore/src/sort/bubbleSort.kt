@@ -10,7 +10,7 @@ fun bubbleSort(arr: IntArray): IntArray {
                 arr[j + 1] = temp
             }
         }
-    }// 연동테스트2
+    }// 연동테스트3
     return arr
 }
 
