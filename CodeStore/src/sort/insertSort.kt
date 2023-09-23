@@ -14,31 +14,32 @@ fun insertionSort(arr: IntArray) {
     }
 }
 
+@Suppress("LocalVariableName")
 fun insertionSort2(arr: IntArray):IntArray {
-    val searchStart = 1
-    val searchEnd = arr.size - searchStart
+    val SEARCH_START = 1
+    val SEARCH_END = arr.size - SEARCH_START
 
     var sortedCount = 0
     do{
-        val select = searchStart + sortedCount
+        val select = SEARCH_START + sortedCount
         var sortedGroupSelect = 0
         var isNotInsert = true
         do {
-            if (selectSmallerThanSortedGroupSelect(arr, select, sortedGroupSelect)) {
-                insertAToB(arr, select, sortedGroupSelect)
+            if (arr.isSelectSmallerThanSortedGroupSelect(select, sortedGroupSelect)) {
+                arr.insertAToB(select, sortedGroupSelect)
                 isNotInsert = false
             }
         } while (isNotInsert && ++sortedGroupSelect < select)
 
-    } while (++sortedCount < searchEnd)
+    } while (++sortedCount < SEARCH_END)
 
     return arr
 }
 
-private fun insertAToB(arr: IntArray, put:Int, replace:Int) {
-    val temp = arr[put]
-    moveNextStartToEnd(arr, replace, put)
-    arr[replace] = temp
+private fun IntArray.insertAToB( put:Int, replace:Int) {
+    val temp = this[put]
+    moveNextStartToEnd(this, replace, put)
+    this[replace] = temp
 }
 
 private fun moveNextStartToEnd(arr: IntArray, start:Int, end:Int){
@@ -50,6 +51,6 @@ private fun moveNextStartToEnd(arr: IntArray, start:Int, end:Int){
     while (--moveSize > 0)
 }
 
-private fun selectSmallerThanSortedGroupSelect(array:IntArray, select:Int, target:Int):Boolean{
-    return array[select] < array[target]
+private fun IntArray.isSelectSmallerThanSortedGroupSelect( select:Int, target:Int):Boolean{
+    return this[select] < this[target]
 }

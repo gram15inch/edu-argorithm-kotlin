@@ -22,23 +22,23 @@ fun selectionSort2(arr: IntArray):IntArray  {
 
     var select = 0
     do{
-        val smallest = getSmallestFromStart(arr, select)
+        val smallest = getSmallestFromSelectToEnd(arr, select)
         switchAtoB(arr, select, smallest)
     }while (++select < arr.size)
 
     return arr
 }
 
-private fun getSmallestFromStart(array:IntArray, start :Int):Int{
-    var smallest = start
-    var select = start + 1
-    if (select >= array.size)
+private fun getSmallestFromSelectToEnd(array:IntArray, select :Int):Int{
+    var smallest = select
+    var start = select + 1
+    if (start >= array.size)
         return start
 
     do{
-        if (array[smallest] > array[select])
-            smallest = select
-    } while (++select < array.size)
+        if (array[smallest] > array[start])
+            smallest = start
+    } while (++start < array.size)
 
     return smallest
 }
