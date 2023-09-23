@@ -22,74 +22,71 @@ output>
 fun baekjun4948(input: List<String>): List<String> {
 
     val result = mutableListOf<String>()
-    input.forEach {
-        val N = it.toInt() // 배열의 마지막 수
+    input.forEach {n->
+        val N = n.toInt() + 1
         val N2 = 2 * N
-
-        if (N == 1)
+        val rangeSize = N2 - N +1
+        val range = IntArray(rangeSize){idx-> idx + N}
+        if(N==2)
             result.add("1")
         else {
-            val firstInRange = N
-            val rangeSize = N2 - N + 1
-            val range = IntArray(rangeSize) { it + firstInRange }
-
-            var P: Int = firstInRange // 아직 지우지 않은 수 중 가장 작은 수, 이 수는 소수.
-            var countOfDelete = 0
-
-            var pRotaion = 0
-
-            do {
-                // 아직 지우지 않은 수 중 가장 작은 수를 찾기
-                pRotaion = getSmallestFirstPRotation(range, pRotaion)
-                P = range[pRotaion]
-
-                //P의 배수대로 지운다
-                countOfDelete = deleteMultipleOfPUntilK(range, P, countOfDelete)
-                //todo 카운트 쓰면 안됨 다른방법 연구
-            } while (countOfDelete < range.size)
-            result.add(range.filter { it != -1 }.size.toString())
+            val count = range.getPrimeCount().toString()
+            result.add(count)
         }
-
     }
 
-
-
-
-
-
-    return input
+    return result
 }
 
-private data class State2(val deleteCount: Int, val latestDelete: Int)
+fun IntArray.getPrimeCount():Int {
+    var firstBeforeDelete = 2
+    val last = last()
+    do{
+        firstBeforeDelete = this.getFirstBeforeDelete(firstBeforeDelete)
+        firstBeforeDelete = this.deleteMultipleFrom(firstBeforeDelete)
+    }
+    while(++firstBeforeDelete <= last && (firstBeforeDelete < this.size))
+    return this.filter { isNotDelete(it) }.size
+}
 
-private fun deleteMultipleOfPUntilK(range: IntArray, p: Int, countOfDelete: Int): Int {
-    var rangeRotation = 0
-    var localCountOfDelete = countOfDelete
+private fun IntArray.deleteMultipleFrom(first: Int):Int{
+    var idx = 0
+    val current = first
     do {
-        if ((range[rangeRotation] != p) && (range[rangeRotation] % p) == 0) {
-            deleteP(range, rangeRotation)
-            ++localCountOfDelete
+        if (isMultipleNotFirst(current, idx)) {
+            this.deleteP(idx)
         }
-    } while (++rangeRotation < range.size)
-    return localCountOfDelete
+    } while (++idx < this.size)
+    return first
+}
+
+private fun IntArray.isMultipleNotFirst(current: Int, first: Int):Boolean {
+    val arr = this[first]
+    if(arr==-1) return false
+    if(current < this[first])
+        return current != arr && (arr % current) == 0
+    else
+        return current != arr && (current % arr) == 0
 }
 
 
-private fun getSmallestFirstPRotation(range: IntArray, currentRotation: Int): Int {
+private fun IntArray.getFirstBeforeDelete(before: Int): Int {
     var isNoPForRotation = true
-    var pRotation = currentRotation
+    var current = before
+    if(first() > current)
+        return current
     do {
-        if (isNotDeleteP(range[pRotation])) {
+        if (isNotDelete(this[current])) {
             isNoPForRotation = false
         }
-    } while (isNoPForRotation && ++pRotation < range.size)
-    return pRotation
+    } while (isNoPForRotation && ++current < this.size)
+    return current
 }
 
-private fun isNotDeleteP(p: Int): Boolean {
+private fun isNotDelete(p: Int): Boolean {
     return p != -1
 }
 
-private fun deleteP(range: IntArray, i: Int) {
-    range[i] = -1
+private fun IntArray.deleteP( i: Int) {
+    this[i] = -1
 }

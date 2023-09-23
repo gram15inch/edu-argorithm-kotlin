@@ -24,10 +24,11 @@ class MainKtTest {
                 "1033\n" +
                 "8392"
 
+        val iList= input.toLine()
+        val oList= output.toLine()
+        val rList = baekjun4948(iList)
 
-        baekjun4948(input.toLine()).forEachIndexed {idx, _->
-            assertEquals(input[idx],output[idx])
-        }
+        assertEquals(oList, rList)
     }
 }
 
