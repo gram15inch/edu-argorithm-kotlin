@@ -25,7 +25,7 @@ fun baekjun4948(input: List<String>): List<String> {
     input.forEach {n->
         val N = n.toInt() + 1
         val N2 = 2 * N
-        val rangeSize = N2 - N +1
+        val rangeSize = N2 - N + 1
         val range = IntArray(rangeSize){idx-> idx + N}
         if(N==2)
             result.add("1")
@@ -39,14 +39,26 @@ fun baekjun4948(input: List<String>): List<String> {
 }
 
 fun IntArray.getPrimeCount():Int {
-    var firstBeforeDelete = 2
-    val last = last()
+    var firstNotDelete = 2
     do{
-        firstBeforeDelete = this.getFirstBeforeDelete(firstBeforeDelete)
-        firstBeforeDelete = this.deleteMultipleFrom(firstBeforeDelete)
+        firstNotDelete = this.getFirstNotDelete(firstNotDelete)
+        firstNotDelete = this.deleteMultipleFrom(firstNotDelete)
     }
-    while(++firstBeforeDelete <= last && (firstBeforeDelete < this.size))
+    while(++firstNotDelete < this.size)
     return this.filter { isNotDelete(it) }.size
+}
+
+private fun IntArray.getFirstNotDelete(latestDelete: Int): Int {
+    var isNoPForRotation = true
+    var current = latestDelete
+    if(first() > current)
+        return current
+    do {
+        if (isNotDelete(this[current])) {
+            isNoPForRotation = false
+        }
+    } while (isNoPForRotation && ++current < this.size)
+    return current
 }
 
 private fun IntArray.deleteMultipleFrom(first: Int):Int{
@@ -60,28 +72,17 @@ private fun IntArray.deleteMultipleFrom(first: Int):Int{
     return first
 }
 
-private fun IntArray.isMultipleNotFirst(current: Int, first: Int):Boolean {
-    val arr = this[first]
+private fun IntArray.isMultipleNotFirst(current: Int, idx: Int):Boolean {
+    val arr = this[idx]
     if(arr==-1) return false
-    if(current < this[first])
+    if(current < this[idx])
         return current != arr && (arr % current) == 0
     else
         return current != arr && (current % arr) == 0
 }
 
 
-private fun IntArray.getFirstBeforeDelete(before: Int): Int {
-    var isNoPForRotation = true
-    var current = before
-    if(first() > current)
-        return current
-    do {
-        if (isNotDelete(this[current])) {
-            isNoPForRotation = false
-        }
-    } while (isNoPForRotation && ++current < this.size)
-    return current
-}
+
 
 private fun isNotDelete(p: Int): Boolean {
     return p != -1
