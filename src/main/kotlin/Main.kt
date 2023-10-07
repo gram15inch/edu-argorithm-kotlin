@@ -1,6 +1,5 @@
-import siver.baekjun4948
 import java.io.BufferedWriter
-
+import java.lang.Math.sqrt
 
 
 fun main(args: Array<String>) {
@@ -15,7 +14,7 @@ fun main(args: Array<String>) {
         line = br.readLine()
     }
 
-    bw.printLines(baekjun4948(lines))
+   // bw.printLines(baekjun4948B(lines))
 }
 
 
@@ -30,3 +29,4 @@ fun BufferedWriter.printLines(line:String){
     this.write(line)
     this.flush()
 }
+

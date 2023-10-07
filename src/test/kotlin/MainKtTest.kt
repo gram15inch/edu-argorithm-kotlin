@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import siver.baekjun2960
 import siver.baekjun4948
+import siver.baekjun4948B
 
 
 class MainKtTest {
