@@ -1,34 +1,41 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import siver.baekjun4948
-import siver.baekjun4948B
+import siver.baekjun28278
 
 
 class MainKtTest {
 
     @Test
     fun run() {
-        val input = "1\n" +
-                "10\n" +
-                "13\n" +
-                "100\n" +
-                "1000\n" +
-                "10000\n" +
-                "100000"
+        val input = "4\n" +
+                "1 3\n" +
+                "1 5\n" +
+                "3\n" +
+                "2\n" +
+                "5\n" +
+                "2\n" +
+                "2\n" +
+                "5"
 
         val output = "1\n" +
-                "4\n" +
+                "2\n" +
+                "5\n" +
                 "3\n" +
-                "21\n" +
-                "135\n" +
-                "1033\n" +
-                "8392"
+                "3\n" +
+                "-1\n" +
+                "-1"
 
         val iList= input.toLine()
         val oList= output.toLine()
-        val rList = baekjun4948(iList)
+        val eList = mutableListOf<String>()
+        iList.forEach {input->
+            baekjun28278(input).let {
+                if(it!= "")
+                    eList.add(it) }
+            }
 
-        assertEquals(oList, rList)
+
+        assertEquals(oList, eList)
     }
 }
 
