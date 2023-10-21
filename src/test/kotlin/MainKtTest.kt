@@ -1,6 +1,6 @@
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-import siver.baekjun28278
+import siver.MyStack
 
 
 class MainKtTest {
@@ -28,8 +28,9 @@ class MainKtTest {
         val iList= input.toLine()
         val oList= output.toLine()
         val eList = mutableListOf<String>()
+        val stack = MyStack()
         iList.forEach {input->
-            baekjun28278(input).let {
+            stack.baekjun28278(input).let {
                 if(it!= "")
                     eList.add(it) }
             }

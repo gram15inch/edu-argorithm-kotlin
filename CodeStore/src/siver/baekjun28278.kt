@@ -25,9 +25,9 @@ package siver
 출력을 요구하는 명령이 주어질 때마다 명령의 결과를 한 줄에 하나씩 출력한다.
 * */
 class MyStack{
-   private val MAX_ORDER_SIZE = 1000000
-   private val stack = Array(MAX_ORDER_SIZE+1){0}
-   private var topIdx = 0
+    private val MAX_ORDER_SIZE = 1000000
+    private val stack = Array(MAX_ORDER_SIZE+1){0}
+    private var topIdx = 0
 
     fun put(p:Int):String{
         if(topIdx<MAX_ORDER_SIZE)
@@ -36,36 +36,35 @@ class MyStack{
     }
 
     fun pop() = when {
-            topIdx > 0 -> stack[--topIdx]
-            else -> -1
-        }.toString()
+        topIdx > 0 -> stack[--topIdx]
+        else -> -1
+    }.toString()
 
 
     fun getSize() = topIdx.toString()
 
     fun isEmpty() = when{
-        topIdx >= 0 -> 1
-        else -> 0
+        topIdx > 0 -> 0
+        else -> 1
     }.toString()
 
     fun getTop()= when{
         topIdx > 0 -> stack[topIdx-1]
         else -> -1
     }.toString()
-}
 
-val myStack = MyStack()
-fun baekjun28278(order:String):String{
-   val orderGroup = order.split(" ").map { it.toInt() }
-    val result = when(orderGroup[0]){
-        1-> myStack.put(orderGroup[1])
-        2-> myStack.pop()
-        3-> myStack.getSize()
-        4-> myStack.isEmpty()
-        5-> myStack.getTop()
-        else-> ""
+    fun baekjun28278(order:String):String{
+        val orderGroup = order.split(" ").map { it.toInt() }
+        val result = when(orderGroup[0]){
+            1-> put(orderGroup[1])
+            2-> pop()
+            3-> getSize()
+            4-> isEmpty()
+            5-> getTop()
+            else-> ""
+        }
+        return result
     }
-  return result
 }
 
 

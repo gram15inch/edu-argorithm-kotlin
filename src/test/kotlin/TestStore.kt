@@ -1,5 +1,6 @@
 import bronze.baekjun5086
 import org.junit.jupiter.api.Assertions
+import siver.MyStack
 import siver.baekjun2960
 import siver.baekjun4948
 
@@ -57,6 +58,38 @@ class TestStore {
         val rList = baekjun4948(iList)
 
         Assertions.assertEquals(oList, rList)
+    }
+
+    private fun test28728(){
+        val input = "4\n" +
+                "1 3\n" +
+                "1 5\n" +
+                "3\n" +
+                "2\n" +
+                "5\n" +
+                "2\n" +
+                "2\n" +
+                "5"
+
+        val output = "1\n" +
+                "2\n" +
+                "5\n" +
+                "3\n" +
+                "3\n" +
+                "-1\n" +
+                "-1"
+
+        val iList= input.toLine()
+        val oList= output.toLine()
+        val eList = mutableListOf<String>()
+        val stack = MyStack()
+        iList.forEach {input->
+            stack.baekjun28278(input).let {
+                if(it!= "")
+                    eList.add(it) }
+        }
+
+        Assertions.assertEquals(oList, eList)
     }
 
 }

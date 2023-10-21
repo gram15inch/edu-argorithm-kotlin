@@ -43,8 +43,8 @@ class MyStack{
     fun getSize() = topIdx.toString()
 
     fun isEmpty() = when{
-        topIdx >= 0 -> 1
-        else -> 0
+        topIdx > 0 -> 0
+        else -> 1
     }.toString()
 
     fun getTop()= when{
