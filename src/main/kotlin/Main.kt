@@ -2,68 +2,47 @@
 import java.io.BufferedWriter
 
 
-
 fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
-    var line = br.readLine()
-    val myStack = MyStack()
+    val counts = br.readLine().toInt()
+    val leftArray = Array<Int>(counts+1){-1}
+    var inTop = 0
+    var leftIdx = -1
+    val peopleInLine = br.readLine().toString()
+    val peopleArray = peopleInLine.split(" ")
+    var isNotWrite = true
+    for(it in peopleArray) {
+        val peopleNum = it.toInt()
+        when{
+            peopleNum == inTop + 1 -> inTop++
+            leftIdx == -1 -> leftArray[++leftIdx] = peopleNum
 
-    repeat (line.toInt()){
-        myStack.baekjun28278(br.readLine()).let{
-            if(it!="")
-                bw.write("$it\n")
+            peopleNum < leftArray[leftIdx] -> { leftArray[++leftIdx] = peopleNum }
+
+            peopleNum > leftArray[leftIdx] && inTop+1 == leftArray[leftIdx] -> {
+                inTop++
+                leftIdx--
+                while (leftIdx !=-1 && inTop+1 == leftArray[leftIdx]){
+                    inTop++
+                    leftIdx--
+                }
+                if(peopleNum == inTop+1)
+                    inTop++
+                else
+                    leftArray[++leftIdx] = peopleNum
+            }
+            else -> {
+                bw.write("Sad")
+                isNotWrite = false
+                break
+            }
         }
     }
-
-
-
-
+    if(isNotWrite)
+        bw.write("Nice")
     bw.flush()
-}
-
-class MyStack{
-    private val MAX_ORDER_SIZE = 1000000
-    private val stack = Array(MAX_ORDER_SIZE+1){0}
-    private var topIdx = 0
-
-    fun put(p:Int):String{
-        if(topIdx<MAX_ORDER_SIZE)
-            stack[topIdx++] = p
-        return ""
-    }
-
-    fun pop() = when {
-        topIdx > 0 -> stack[--topIdx]
-        else -> -1
-    }.toString()
-
-
-    fun getSize() = topIdx.toString()
-
-    fun isEmpty() = when{
-        topIdx > 0 -> 0
-        else -> 1
-    }.toString()
-
-    fun getTop()= when{
-        topIdx > 0 -> stack[topIdx-1]
-        else -> -1
-    }.toString()
-
-    fun baekjun28278(order:String):String{
-        val orderGroup = order.split(" ").map { it.toInt() }
-        val result = when(orderGroup[0]){
-            1-> put(orderGroup[1])
-            2-> pop()
-            3-> getSize()
-            4-> isEmpty()
-            5-> getTop()
-            else-> ""
-        }
-        return result
-    }
 }
 
 
