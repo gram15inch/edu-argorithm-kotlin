@@ -11,51 +11,60 @@ fun main() {
     val st2 = StringTokenizer(br.readLine())
     val array =IntArray(arraySize){st2.nextToken().toInt()}
 
-    val sortedArray = mergeSort(array,0,array.size-1,saveTimes)
-    bw.write(sortedArray.toList().toString())
-    bw.write("\n"+last)
+    //val sortedArray = mergeSort(array,0,array.size-1, saveTimes)
+    //bw.write(sortedArray.toList().toString())
+    //bw.write("\n"+last)
     bw.flush()
 }
 
-var count =0
-var last = 0
-fun mergeSort(array: IntArray, leftIdx:Int, rightIdx:Int, saveTime:Int): IntArray {
-    if(leftIdx == rightIdx)
-        return IntArray(1){array[leftIdx]}
-    val midIdx :Int = (leftIdx + rightIdx)/2
-
-    val leftArray = mergeSort(array, leftIdx, midIdx, saveTime)
-    val rightArray = mergeSort(array,midIdx+1, rightIdx, saveTime)
-
-    return merge(leftArray,rightArray, saveTime)
-}
-fun merge(leftArr:IntArray, rightArr: IntArray, saveTime: Int): IntArray {
-    val mergeArr = IntArray(leftArr.size + rightArr.size)
-    var lIdx = 0
-    var rIdx = 0
-
-    while(lIdx+rIdx <= mergeArr.size-1){
-        val result:Int
-        if(lIdx < leftArr.size && rIdx< rightArr.size) {
-            if (leftArr[lIdx] < rightArr[rIdx]) {
-                mergeArr[lIdx + rIdx] = leftArr[lIdx]
-                result = leftArr[lIdx++]
-            }
-            else {
-                mergeArr[lIdx + rIdx] = rightArr[rIdx++]
-                result = rightArr[rIdx++]
-            }
-        }else if(lIdx < leftArr.size){
-            mergeArr[lIdx + rIdx] = leftArr[lIdx]
-            result = leftArr[lIdx++]
-        }else {
-            mergeArr[lIdx + rIdx] = rightArr[rIdx]
-            result = leftArr[lIdx++]
-        }
-
-        if(++count == saveTime)
-            last = result
+fun merge_sort(arr:IntArray, start:Int, end:Int){
+    if(start < end){
+        val mid:Int = (start + end) / 2
+        merge_sort(arr, start, mid)
+        merge_sort(arr, mid+1, end)
+        merge(arr, start, end, mid)
     }
-
-    return mergeArr
 }
+
+fun merge(arr: IntArray, start: Int, mid: Int, end: Int) {
+    var lStart = start
+    var rStart = end+1
+    var tmp = 1
+    val tmpArr = IntArray(arr.size)
+    while (lStart <= end && rStart <= mid){
+        if(arr[lStart]<= arr[rStart])
+            tmpArr[tmp++] = arr[lStart++]
+        else
+            tmpArr[tmp++] = arr[rStart++]
+    }
+}
+/*
+
+# A[p..q]와 A[q+1..r]을 병합하여 A[p..r]을 오름차순 정렬된 상태로 만든다.
+# A[p..q]와 A[q+1..r]은 이미 오름차순으로 정렬되어 있다.
+merge(A[], p, q, r) {
+    i <- p; j <- q + 1; t <- 1;
+    while (i ≤ q and j ≤ r) {
+        if (A[i] ≤ A[j])
+        then tmp[t++] <- A[i++]; # tmp[t] <- A[i]; t++; i++;
+        else tmp[t++] <- A[j++]; # tmp[t] <- A[j]; t++; j++;
+    }
+    while (i ≤ q)  # 왼쪽 배열 부분이 남은 경우
+        tmp[t++] <- A[i++];
+    while (j ≤ r)  # 오른쪽 배열 부분이 남은 경우
+        tmp[t++] <- A[j++];
+    i <- p; t <- 1;
+    while (i ≤ r)  # 결과를 A[p..r]에 저장
+        A[i++] <- tmp[t++];
+}
+
+merge_sort(A[p..r]) { # A[p..r]을 오름차순 정렬한다.
+    if (p < r) then {
+        q <- ⌊(p + r) / 2⌋;       # q는 p, r의 중간 지점
+        merge_sort(A, p, q);      # 전반부 정렬
+        merge_sort(A, q + 1, r);  # 후반부 정렬
+        merge(A, p, q, r);        # 병합
+    }
+}
+
+* */
