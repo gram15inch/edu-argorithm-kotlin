@@ -1,41 +1,71 @@
 import java.util.StringTokenizer
-
+var arraySize =0
+var saveTimes = 0
+var count = 0
+var num = -1
+var isNotFInd = true
+var tmpArr = IntArray(0)
 fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
     val st1= StringTokenizer(br.readLine())
-    val arraySize = st1.nextToken().toInt()
-    val saveTimes = st1.nextToken().toInt()
+    arraySize = st1.nextToken().toInt()
+    saveTimes = st1.nextToken().toInt()
 
     val st2 = StringTokenizer(br.readLine())
     val array =IntArray(arraySize){st2.nextToken().toInt()}
 
-    //val sortedArray = mergeSort(array,0,array.size-1, saveTimes)
-    //bw.write(sortedArray.toList().toString())
-    //bw.write("\n"+last)
+    merge_sort(array,0,array.size-1)
+    bw.write("$num")
     bw.flush()
 }
 
 fun merge_sort(arr:IntArray, start:Int, end:Int){
-    if(start < end){
+    if(start < end && isNotFInd){
         val mid:Int = (start + end) / 2
         merge_sort(arr, start, mid)
+        if(!isNotFInd)
+            return
         merge_sort(arr, mid+1, end)
-        merge(arr, start, end, mid)
+        if(!isNotFInd)
+            return
+        merge(arr, start, mid, end)
     }
 }
 
 fun merge(arr: IntArray, start: Int, mid: Int, end: Int) {
-    var lStart = start
-    var rStart = end+1
-    var tmp = 1
-    val tmpArr = IntArray(arr.size)
-    while (lStart <= end && rStart <= mid){
-        if(arr[lStart]<= arr[rStart])
+    if(isNotFInd){
+        var lStart = start
+        var rStart = mid + 1
+        var tmp = 0
+
+        while (lStart <= mid && rStart <= end) {
+            if (arr[lStart] <= arr[rStart])
+                tmpArr[tmp++] = arr[lStart++]
+            else
+                tmpArr[tmp++] = arr[rStart++]
+        }
+
+        while (lStart < mid + 1) {
             tmpArr[tmp++] = arr[lStart++]
-        else
+        }
+
+        while (rStart <= end) {
             tmpArr[tmp++] = arr[rStart++]
+        }
+
+        var mStart = start
+        var mTmp = 0
+        while (mStart <= end) {
+            count++
+            if (count == saveTimes) {
+                num = tmpArr[mTmp]
+                isNotFInd = false
+                return
+            }
+            arr[mStart++] = tmpArr[mTmp++]
+        }
     }
 }
 /*
