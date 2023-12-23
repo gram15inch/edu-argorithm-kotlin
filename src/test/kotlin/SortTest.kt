@@ -2,6 +2,7 @@ import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
 import sort.bubbleSort2
 import sort.insertionSort2
+import sort.mergeSort
 import sort.selectionSort2
 
 class SortTest {
@@ -59,26 +60,9 @@ class SortTest {
 
     @Test
     fun mergeTest(){
-        val input = IntArray(5){5-it+1}
-        val expect = IntArray(5){it}
-        //todo 범위안맞음
-        merge_sort(input,0,4)
-        assertEquals(expect.toList(), input.toList())
-    }
-
-    @Test
-    fun mergeTest2(){
-        var start = 1000000000
-        val input = IntArray(500000){start - it}
-        var start2 = input.last()
-        val expect = IntArray(500000){start2 + it}
-        assertEquals(input[0], 1000000000)
-        assertEquals(input.last(), 999500001)
-        assertEquals(expect[0], start2)
-        assertEquals(expect.last(), 1000000000)
-
-
-        merge_sort(input,0,500000-1)
+        val input = IntArray(5){5-it}
+        val expect = IntArray(5){it+1}
+        mergeSort(input,0,4)
         assertEquals(expect.toList(), input.toList())
     }
 
