@@ -1,45 +1,57 @@
-import java.util.*
+import java.util.StringTokenizer
 
+@Suppress("unused")
 fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
+    val n= br.readLine().toInt()
+    size =n
+    val st =  StringTokenizer(br.readLine())
+    val arr = Array(n){st.nextToken().toInt() }
 
-    val st1 = StringTokenizer(br.readLine())
-    val N = st1.nextToken().toInt()
-    var step = 1
-    var latestNumString = "666"
-    var preInt =0
-    while(step <= N){
-        when{
-            isNoDigitAfter666(latestNumString) || isNearest9After666(latestNumString)->{
-                preInt = 0
-                while(preInt == '5') {
+    mergeSort(arr,0, arr.size-1)
 
-                    step++
-                }
-            }
-            isNearest5Before666(latestNumString)->{
-
-            }
-        }
+    for(num in arr){
+        bw.write("$num ")
     }
-
-    bw.write("")
     bw.flush()
 }
 
-private fun isNoDigitAfter666(num:String):Boolean{
-    return true
+private fun mergeSort(arr:Array<Int>, start:Int, end:Int){
+    if(start < end){
+        val mid:Int = (start + end) / 2
+        mergeSort(arr, start, mid)
+        mergeSort(arr, mid+1, end)
+        merge(arr, start, mid, end)
+    }
 }
+private var size = 0
+private val tmpArr by lazy { Array(size) { 0 } }
+private fun merge(arr: Array<Int>, start: Int, mid: Int, end: Int) {
+    var lStart = start
+    var rStart = mid+1
+    var tmp = 0
 
+    while (lStart <= mid && rStart <= end){
+        if(arr[lStart] < arr[rStart])
+            tmpArr[tmp++] = arr[lStart++]
+        else
+            tmpArr[tmp++] = arr[rStart++]
+    }
 
-private fun isNearest9After666(num:String):Boolean{
-    return true
+    while (lStart<mid+1){
+        tmpArr[tmp++] = arr[lStart++]
+    }
+
+    while (rStart<=end){
+        tmpArr[tmp++] = arr[rStart++]
+    }
+
+    var mStart = start
+    var mTmp = 0
+    while (mStart <= end){
+        arr[mStart++] = tmpArr[mTmp++]
+    }
 }
-
-private fun isNearest5Before666(num:String):Boolean{
-    return true
-}
-
 
