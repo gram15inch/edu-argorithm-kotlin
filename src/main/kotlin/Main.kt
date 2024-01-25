@@ -5,17 +5,27 @@ fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
+
+
     val n= br.readLine().toInt()
-    val st =  StringTokenizer(br.readLine())
-    val arr1 = Array(n){st.nextToken().toInt() }
-    val arr2 = arr1.distinct().sorted()
-    val hash = HashMap<Int,Int>()
-    arr2.forEachIndexed { idx, num->
-        hash.put(num, idx)
+    val hash = HashMap<Int,String>()
+
+    repeat(n) {
+        val st = StringTokenizer(br.readLine())
+        val name = st.nextToken()
+        val status = st.nextToken()
+
+         if(hash.getOrDefault(name.hashCode(),"")=="")
+             hash[name.hashCode()] = name
+         else
+             when(status){
+                "enter"->{ hash[name.hashCode()] = name }
+                "leave"->{ hash.remove(name.hashCode()) }
+             }
     }
 
-    for(num1 in arr1) {
-        bw.write("${hash.get(num1)} ")
+    hash.map{it.value}.sortedByDescending { it }.forEach {
+        bw.write("${it}\n")
     }
 
     bw.flush()
