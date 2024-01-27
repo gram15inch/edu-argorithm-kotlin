@@ -1,8 +1,10 @@
+package siver
+
 import java.util.*
 import kotlin.collections.HashMap
 
-
-fun main() {
+@Suppress("unused")
+fun baekjun7785(){
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
@@ -26,8 +28,3 @@ fun main() {
 
     bw.flush()
 }
-
-
-
-
-
