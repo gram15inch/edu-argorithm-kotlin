@@ -2,7 +2,8 @@ package siver
 
 import java.util.*
 
-fun baekjun1018() {
+@Suppress("unused")
+private fun baekjun1018() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
