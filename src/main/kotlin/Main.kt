@@ -9,59 +9,76 @@ fun main() {
     val bw = System.out.bufferedWriter()
 
     StreamTokenizer(br).apply {
-        fun getInt() : Int{
+        fun getInt(): Int {
             nextToken()
             return nval.toInt()
         }
 
-        fun getString():String{
+        fun getLong(): Long {
+            nextToken()
+            return nval.toLong()
+        }
+
+        fun getString(): String {
             nextToken()
             return sval.toString()
         }
 
-        var ma =0
-        var mb =0
-        var mal =0L
-        var mbl =0L
-        var isLong =false
-        getString().apply {
-            isLong = this.length > 8
-            ma = this.toInt()
-            mal = this.toLong()
-        }
-        getString().apply {
-            isLong = this.length > 8
-            mb = this.toInt()
-            mbl = this.toLong()
-        }
 
-        fun<T:Number> test1(pa:T,pb:T) {
-            var a = with(pa) { if(this is Int) this.toInt() else this.toLong() }
-            var b = with(pb) { if(this is Int) this.toInt() else this.toLong() }
-            var gcd :Int
-            val ab :Long
-
-            when{
-                a==1 -> bw.write("$b\n")
-                b==1 -> bw.write("$a\n")
-                else->{
-                    ab = (a * b).toLong()
-                    do{
-                        gcd = a%b
-                        if(gcd != 0) {
-                            a = b
-                            b = gcd
-                        }
-                        else
-                            break
-                    }
-                    while (true)
-                    bw.write("${ab/b}\n")
+        fun gcd(a: Long, b: Long): Long {
+            (a % b).apply {
+                return when {
+                    this == 0L -> b
+                    else -> gcd(b, this)
                 }
             }
         }
 
+        fun gcd(a: Int, b: Int): Int {
+            (a % b).apply {
+                return when {
+                    this == 0 -> b
+                    else -> gcd(b, this)
+                }
+            }
+        }
+
+        fun lcm(gcd: Long, a: Long, b: Long): Long = a * b / gcd
+        fun lcm(gcd: Int, a: Int, b: Int): Int = a * b / gcd
+
+        //todo 21억 넘을시 나는 오류부터 찾아보기
+        fun isPrime(limit: Long): Boolean {
+            var i =2
+            when(limit){
+                1L,2L-> return true
+                else->{
+                    while (i*i<=limit){
+                        if(limit%i.toLong()==0L)
+                            return false
+                        i++
+                    }
+                }
+            }
+
+            return true
+        }
+
+        repeat(getInt()) {
+            getLong().apply {
+                for (i in this downTo 2L)
+                    if (isPrime(i)){
+                        bw.write("$i\n")
+                        break
+                    }
+            }
+        }
+
+
+        bw.flush()
+
+
+
     }
-    bw.flush()
+
 
 }
