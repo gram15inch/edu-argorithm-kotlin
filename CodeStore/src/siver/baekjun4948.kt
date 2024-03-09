@@ -1,5 +1,6 @@
 package siver
 
+import java.io.StreamTokenizer
 import java.lang.Math.sqrt
 
 
@@ -61,3 +62,44 @@ private fun IntArray.getPrimeCount(N:Int,N2:Int): Int {
     }
     return count
 }
+
+@Suppress("unused")
+private fun baekjun4948no2() {
+    val br = System.`in`.bufferedReader()
+    val bw = System.out.bufferedWriter()
+
+    StreamTokenizer(br).apply {
+        fun getInt(): Int {
+            nextToken()
+            return nval.toInt()
+        }
+
+        while (true) {
+            val min = getInt()
+            if (min == 0)
+                break
+            val max = 2 * min
+            var count = 0
+            val maxSqrt = kotlin.math.sqrt(max.toDouble()).toInt()
+            val arrSieve = BooleanArray(max + 1) { true }
+
+            for (idx in 0..1)
+                arrSieve[idx] = false
+
+            for (mul in 2..maxSqrt)
+                if (arrSieve[mul])
+                    for (idx in mul * mul..max step mul)
+                        arrSieve[idx] = false
+
+            for (idx in min + 1..max)
+                if (arrSieve[idx])
+                    count++
+
+            bw.write("$count\n")
+
+        }
+
+        bw.flush()
+    }
+}
+
