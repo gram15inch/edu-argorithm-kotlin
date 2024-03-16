@@ -1,8 +1,4 @@
 import java.io.StreamTokenizer
-import java.util.HashSet
-import java.util.StringTokenizer
-import kotlin.collections.HashMap
-import kotlin.math.sign
 
 fun main() {
     val br = System.`in`.bufferedReader()
@@ -46,38 +42,47 @@ fun main() {
         fun lcm(gcd: Long, a: Long, b: Long): Long = a * b / gcd
         fun lcm(gcd: Int, a: Int, b: Int): Int = a * b / gcd
 
-        //todo 21억 넘을시 나는 오류부터 찾아보기
         fun isPrime(limit: Long): Boolean {
-            var i =2
             when(limit){
-                1L,2L-> return true
+                0L,1L-> return false
                 else->{
-                    while (i*i<=limit){
-                        if(limit%i.toLong()==0L)
+                    for (a in  2.. kotlin.math.sqrt(limit.toDouble()).toInt()){
+                        if(limit%a.toLong()==0L)
                             return false
-                        i++
                     }
                 }
             }
 
             return true
         }
+        val numGroup = mutableListOf<Int>()
+        repeat (getInt()){
+            numGroup.add(getInt())
+        }
+        val max = numGroup.max()
+        var count = 0
+        val maxSqrt = kotlin.math.sqrt(max.toDouble()).toInt()
+        val arrSieve = BooleanArray(max + 1) { true }
 
-        repeat(getInt()) {
-            getLong().apply {
-                for (i in this downTo 2L)
-                    if (isPrime(i)){
-                        bw.write("$i\n")
-                        break
-                    }
+        for (idx in 0..1)
+            arrSieve[idx] = false
+
+        for (mul in 2..maxSqrt)
+            if (arrSieve[mul])
+                for (idx in mul * mul..max step mul)
+                    arrSieve[idx] = false
+        //실패ㅠ
+        numGroup.forEach {
+            count=0
+            for(num in 2..it){
+                if(arrSieve[num])
+                    if(arrSieve[it-num])
+                        count++
             }
+            bw.write("$count\n")
         }
 
-
         bw.flush()
-
-
-
     }
 
 
