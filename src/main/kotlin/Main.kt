@@ -1,4 +1,5 @@
 import java.io.StreamTokenizer
+import java.util.LinkedList
 
 fun main() {
     val br = System.`in`.bufferedReader()
@@ -55,34 +56,20 @@ fun main() {
 
             return true
         }
-        val numGroup = mutableListOf<Int>()
-        repeat (getInt()){
-            numGroup.add(getInt())
-        }
-        val max = numGroup.max()
+
+        val n = getInt()
+        val k = getInt()
+        var q1 = LinkedList<Int>()
         var count = 0
-        val maxSqrt = kotlin.math.sqrt(max.toDouble()).toInt()
-        val arrSieve = BooleanArray(max + 1) { true }
-
-        for (idx in 0..1)
-            arrSieve[idx] = false
-
-        for (mul in 2..maxSqrt)
-            if (arrSieve[mul])
-                for (idx in mul * mul..max step mul)
-                    arrSieve[idx] = false
-        //실패ㅠ
-        numGroup.forEach {
-            count=0
-            for(num in 2..it){
-                if(arrSieve[num])
-                    if(arrSieve[it-num])
-                        count++
-            }
-            bw.write("$count\n")
+        for(no in 1 ..  n)
+            q1.add(no)
+        while (q1.size>1){
+          count = (count+k)%q1.size
+            bw.write("${q1.get(if(count==0) q1.size else count-1)}\n")
+            q1.remove(count)
         }
-
         bw.flush()
+
     }
 
 
