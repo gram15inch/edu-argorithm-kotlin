@@ -1,5 +1,8 @@
 import java.io.StreamTokenizer
+import java.util.Deque
 import java.util.LinkedList
+import java.util.NoSuchElementException
+import java.util.Queue
 
 fun main() {
     val br = System.`in`.bufferedReader()
@@ -58,18 +61,27 @@ fun main() {
         }
 
         val n = getInt()
-        val k = getInt()
-        var q1 = LinkedList<Int>()
-        var count = 0
-        for(no in 1 ..  n)
-            q1.add(no)
-        while (q1.size>1){
-          count = (count+k)%q1.size
-            bw.write("${q1.get(if(count==0) q1.size else count-1)}\n")
-            q1.remove(count)
-        }
-        bw.flush()
+        val deque1:Deque<Int> = LinkedList()
+        repeat(n){
+            val order = getInt()
+            try{
+                when(order){
+                    1->{deque1.addFirst(getInt())}
+                    2->{deque1.addLast(getInt())}
+                    3->{bw.write("${deque1.removeFirst()}\n")}
+                    4->{bw.write("${deque1.removeLast()}\n")}
+                    5->{bw.write("${deque1.size}\n")}
+                    6->{bw.write("${if(deque1.isEmpty()) 1 else 0}\n")}
+                    7->{bw.write("${deque1.first}\n")}
+                    8->{bw.write("${deque1.last}\n")}
+                }
+            }catch (e:NoSuchElementException){
+                bw.write("1\n")
+            }
 
+        }
+
+        bw.flush()
     }
 
 
