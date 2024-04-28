@@ -1,8 +1,6 @@
 import java.io.StreamTokenizer
 import java.util.Deque
 import java.util.LinkedList
-import java.util.NoSuchElementException
-import java.util.Queue
 
 fun main() {
     val br = System.`in`.bufferedReader()
@@ -61,25 +59,50 @@ fun main() {
         }
 
         val n = getInt()
-        val deque1:Deque<Int> = LinkedList()
+        val dec :Deque<Int> = LinkedList()
         repeat(n){
-            val order = getInt()
-            try{
-                when(order){
-                    1->{deque1.addFirst(getInt())}
-                    2->{deque1.addLast(getInt())}
-                    3->{bw.write("${deque1.removeFirst()}\n")}
-                    4->{bw.write("${deque1.removeLast()}\n")}
-                    5->{bw.write("${deque1.size}\n")}
-                    6->{bw.write("${if(deque1.isEmpty()) 1 else 0}\n")}
-                    7->{bw.write("${deque1.first}\n")}
-                    8->{bw.write("${deque1.last}\n")}
+            dec.add(getInt())
+        }
+
+        var position = 1
+        fun Deque<Int>.next(isRemove:Boolean){
+            if(++position>size)
+                position-=size
+            if(isRemove)
+                removeFirst()
+            else
+                addLast(removeFirst())
+        }
+
+        fun Deque<Int>.prev(isRemove:Boolean){
+            if(--position<=0)
+                position+=size
+            if(isRemove)
+                removeLast()
+            else
+                addFirst(removeLast())
+        }
+
+
+
+        repeat(n){
+            if(it!=0) {
+               val isNext = dec.first>0
+               val step = if(dec.first>0) dec.first else dec.first *-1
+                for (r in 1..step) {
+                    if (isNext)
+                        dec.next(r == 1)
+                    else
+                        dec.prev(r == 1)
                 }
-            }catch (e:NoSuchElementException){
-                bw.write("1\n")
+                bw.write("$position ")
+            }
+            else{
+                bw.write("$position ")
             }
 
         }
+
 
         bw.flush()
     }
