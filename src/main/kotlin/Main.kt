@@ -59,51 +59,47 @@ fun main() {
         }
 
         val n = getInt()
-        val dec :Deque<Int> = LinkedList()
+        val deq :Deque<Short> = LinkedList()
         repeat(n){
-            dec.add(getInt())
+            getInt().toShort().apply {
+                deq.add(this)
+            }
         }
+
+        // todo 4mb 안에서 방법 찾아보기
+        // todo 없어진 원소에대한 위치처리 방법 찾기
 
         var position = 1
-        fun Deque<Int>.next(isRemove:Boolean){
-            if(++position>size)
-                position-=size
-            if(isRemove)
-                removeFirst()
-            else
-                addLast(removeFirst())
+        fun Deque<Short>.next(){
+            position++
+            if(position > deq.size)
+                position-=deq.size
+            addLast(removeFirst())
         }
 
-        fun Deque<Int>.prev(isRemove:Boolean){
-            if(--position<=0)
-                position+=size
-            if(isRemove)
-                removeLast()
-            else
-                addFirst(removeLast())
+        fun Deque<Short>.prev(){
+            position--
+            if(position < 1)
+                position+=deq.size
+            addFirst(removeLast())
         }
 
 
-
-        repeat(n){
-            if(it!=0) {
-               val isNext = dec.first>0
-               val step = if(dec.first>0) dec.first else dec.first *-1
-                for (r in 1..step) {
-                    if (isNext)
-                        dec.next(r == 1)
-                    else
-                        dec.prev(r == 1)
+        while (deq.size>1){
+            val boom =deq.first
+            bw.write("$position ")
+            deq.removeFirst()
+            position++
+            if(boom>0)
+                repeat(boom-1){
+                    deq.next()
                 }
-                bw.write("$position ")
-            }
-            else{
-                bw.write("$position ")
-            }
-
+            else
+                repeat((boom*-1)){
+                    deq.prev()
+                }
         }
-
-
+        bw.write("$position")
         bw.flush()
     }
 
