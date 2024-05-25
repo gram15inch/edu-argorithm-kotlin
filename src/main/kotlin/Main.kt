@@ -1,107 +1,53 @@
 import java.io.StreamTokenizer
-import java.util.Deque
-import java.util.LinkedList
+import java.util.*
+import kotlin.math.abs
+
 
 fun main() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
-
+    fun three(num:Int):Int{
+        val mod= num%3
+        return if(mod==0) 3 else mod
+    }
     StreamTokenizer(br).apply {
         fun getInt(): Int {
             nextToken()
             return nval.toInt()
         }
+        data class NameStack(val name:Int,val stack:Stack<Int>)
 
-        fun getLong(): Long {
-            nextToken()
-            return nval.toLong()
-        }
-
-        fun getString(): String {
-            nextToken()
-            return sval.toString()
-        }
-
-
-        fun gcd(a: Long, b: Long): Long {
-            (a % b).apply {
-                return when {
-                    this == 0L -> b
-                    else -> gcd(b, this)
+        val num = getInt()
+        val sb = StringBuilder()
+        fun hanoi(floor:Int,from:Int, to:Int):Int{ // 1 2 / 3 2 / 2 3
+            if(floor == 0) return 0
+            when(abs(from - to)){
+                1->{
+                    //todo n-1을 옮기는 경우가 다름
+                    hanoi(floor-1, from, three(to+1)) // 1 3 / 3 1 / 2 1
+                        .run{
+                            sb.append("$from $to\n")
+                            return this+1 +hanoi(floor-1, three(from+2), three(to)) // 3 2 / 2 3 / 1 2
+                        }
                 }
-            }
-        }
-
-        fun gcd(a: Int, b: Int): Int {
-            (a % b).apply {
-                return when {
-                    this == 0 -> b
-                    else -> gcd(b, this)
-                }
-            }
-        }
-
-        fun lcm(gcd: Long, a: Long, b: Long): Long = a * b / gcd
-        fun lcm(gcd: Int, a: Int, b: Int): Int = a * b / gcd
-
-        fun isPrime(limit: Long): Boolean {
-            when(limit){
-                0L,1L-> return false
-                else->{
-                    for (a in  2.. kotlin.math.sqrt(limit.toDouble()).toInt()){
-                        if(limit%a.toLong()==0L)
-                            return false
+                2->{
+                    hanoi(floor-1, from, three(from+1)) // 1 2
+                    .run{
+                        sb.append("$from $to\n")
+                      return this +1 + hanoi(floor-1, three(from+1), three(from+2)) // 2 3
                     }
                 }
             }
-
-            return true
+            return 0
         }
 
-        val n = getInt()
-        val deq :Deque<Short> = LinkedList()
-        repeat(n){
-            getInt().toShort().apply {
-                deq.add(this)
-            }
-        }
-
-        // todo 4mb 안에서 방법 찾아보기
-        // todo 없어진 원소에대한 위치처리 방법 찾기
-
-        var position = 1
-        fun Deque<Short>.next(){
-            position++
-            if(position > deq.size)
-                position-=deq.size
-            addLast(removeFirst())
-        }
-
-        fun Deque<Short>.prev(){
-            position--
-            if(position < 1)
-                position+=deq.size
-            addFirst(removeLast())
-        }
-
-
-        while (deq.size>1){
-            val boom =deq.first
-            bw.write("$position ")
-            deq.removeFirst()
-            position++
-            if(boom>0)
-                repeat(boom-1){
-                    deq.next()
-                }
-            else
-                repeat((boom*-1)){
-                    deq.prev()
-                }
-        }
-        bw.write("$position")
-        bw.flush()
+        bw.write("${hanoi(num,3,2)}\n")
+        bw.write(sb.toString())
     }
 
 
+    bw.flush()
+
+
 }
+
