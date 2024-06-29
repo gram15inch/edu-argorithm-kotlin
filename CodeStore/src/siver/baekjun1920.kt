@@ -1,7 +1,9 @@
+package siver
+
 import java.io.StreamTokenizer
 
-
-fun main() {
+@Suppress("unused")
+private fun baekjun1920() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
 
@@ -28,6 +30,3 @@ fun main() {
     bw.flush()
 
 }
-
-
-
