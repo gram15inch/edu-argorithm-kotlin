@@ -1,6 +1,5 @@
 import java.io.StreamTokenizer
-import java.util.LinkedList
-import java.util.Queue
+import java.util.*
 
 
 fun main() {
@@ -15,39 +14,30 @@ fun main() {
 
 
         val n = getInt()
-        repeat(n){
-            val size = getInt()
-            val searchIdx = getInt()
-            val que:Queue<Pair<Int,Int>> = LinkedList<Pair<Int,Int>>()
+        val arr = IntArray(n){getInt()}
+        val stack = Stack<Int>()
+        var idx = 0
+        var num = 1
+        var collect = 0
+        while (collect<n){
+            if(arr[idx]==num){
+                stack.push(num++) // todo 계속비교
+                bw.write("+\n")
 
-            var max = 9
-            repeat(size){
-                que.add(Pair(it,getInt()))
-            }
-
-            var isWrite = false
-            var delete = 0
-            while (!isWrite){
-
-                if(max == que.peek().second){
-                    delete++
-                    que.poll().apply {
-                        if(searchIdx==this.first){
-                            isWrite=true
-                            bw.write("$delete\n")
-                        }else{
-                            que.add(this)
-                        }
-                    }
+                idx++
+                collect++
+                stack.pop()
+                bw.write("-\n")
+            }else{
+                if(stack.isEmpty() || stack.peek() < num) {
+                    stack.push(num++)
+                    bw.write("+\n")
                 }
             }
-
-
         }
     }
 
     bw.flush()
-
 }
 
 
