@@ -1,5 +1,5 @@
 import java.io.StreamTokenizer
-import java.util.*
+
 
 
 fun main() {
@@ -11,30 +11,24 @@ fun main() {
             nextToken()
             return nval.toInt()
         }
-
-
-        val n = getInt()
-        val arr = IntArray(n){getInt()}
-        val stack = Stack<Int>()
-        var idx = 0
-        var num = 1
-        var collect = 0
-        while (collect<n){
-            if(arr[idx]==num){
-                stack.push(num++) // todo 계속비교
-                bw.write("+\n")
-
-                idx++
-                collect++
-                stack.pop()
-                bw.write("-\n")
-            }else{
-                if(stack.isEmpty() || stack.peek() < num) {
-                    stack.push(num++)
-                    bw.write("+\n")
-                }
+        //todo 시간초과
+        val k = getInt() // 서로다른 길이의 기존 랜선
+        val n = getInt() // 알아내야할 같은길이의 갯수
+        var lanLength = 0
+        val arr = IntArray(k){getInt().apply {
+            if(this>lanLength)
+                lanLength=this
+        }}
+        while (lanLength>0){
+            var count = 0
+            arr.forEach {
+                count += it/lanLength
             }
+            if(count>=n)
+                break
+            lanLength--
         }
+        bw.write("$lanLength\n")
     }
 
     bw.flush()
