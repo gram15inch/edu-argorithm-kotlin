@@ -11,24 +11,39 @@ fun main() {
             nextToken()
             return nval.toInt()
         }
-        //todo 시간초과
+
         val k = getInt() // 서로다른 길이의 기존 랜선
         val n = getInt() // 알아내야할 같은길이의 갯수
         var lanLength = 0
+
+
+
         val arr = IntArray(k){getInt().apply {
             if(this>lanLength)
                 lanLength=this
-        }}
-        while (lanLength>0){
-            var count = 0
-            arr.forEach {
-                count += it/lanLength
+        } }
+
+        fun getMaxDivLength(left:Int, right:Int, step:Int):Int{
+            val mid = left+(right-left) / 2
+            val lLength = mid-left+1
+            val rLength = right-mid+1
+            val small = if(lLength>rLength) rLength else lLength
+            if(step<1)
+                return small
+            else {
+                getMaxDivLength(left,mid-1,step,)
             }
-            if(count>=n)
-                break
-            lanLength--
+            return -1
         }
-        bw.write("$lanLength\n")
+
+        var count = 0
+        while (count<=11){
+            arr.forEach {
+
+            }
+        }
+
+        bw.write("${getMaxDivLength(0,799,200)}")
     }
 
     bw.flush()
