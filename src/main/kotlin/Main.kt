@@ -12,38 +12,37 @@ fun main() {
             return nval.toInt()
         }
 
-        val k = getInt() // 서로다른 길이의 기존 랜선
-        val n = getInt() // 알아내야할 같은길이의 갯수
-        var lanLength = 0
+        val n = getInt()
 
-
-
-        val arr = IntArray(k){getInt().apply {
-            if(this>lanLength)
-                lanLength=this
-        } }
-
-        fun getMaxDivLength(left:Int, right:Int, step:Int):Int{
-            val mid = left+(right-left) / 2
-            val lLength = mid-left+1
-            val rLength = right-mid+1
-            val small = if(lLength>rLength) rLength else lLength
-            if(step<1)
-                return small
-            else {
-                getMaxDivLength(left,mid-1,step,)
-            }
-            return -1
+        fun isPut(array: IntArray, put :Int):Boolean{
+            return false
         }
 
-        var count = 0
-        while (count<=11){
-            arr.forEach {
+        fun findCase(chessArr:IntArray, start:Int):Int{
+            for (idx in start..<n){
+                if(isPut(chessArr,start)){
+                    return 0
+                }
+
+                chessArr[idx] = 1
+                findCase(chessArr, idx+1)
+                chessArr[idx] = 0
 
             }
+
+            return 0
         }
 
-        bw.write("${getMaxDivLength(0,799,200)}")
+        fun getChessCase(size:Int):Int{
+            val chessArr = IntArray(size){0}
+
+            return findCase(chessArr,0)
+        }
+
+
+
+        bw.write("${getChessCase(n)}")
+
     }
 
     bw.flush()
