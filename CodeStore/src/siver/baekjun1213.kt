@@ -43,25 +43,20 @@ private fun baekjun1213() {
         val mid= str.size/2-1
         str.copyOfRange(0,mid+1).apply{
             this.sort()
-            for(num in this.indices)
-                str[num]=this[num]
-        }
-        str.copyOfRange(mid+1,str.size).apply(){
-            this.sortDescending()
-            for(num in this.indices)
-                str[num+mid+1]=this[num]
+            for(num in this.indices) {
+                str[num] = this[num]
+                str[num+mid+1]=this[(this.size-1)-num]
+            }
+
         }
     }else{
         val mid= str.size/2
         str.copyOfRange(0,mid).apply{
             this.sort()
-            for(num in this.indices)
-                str[num]=this[num]
-        }
-        str.copyOfRange(mid+1,str.size).apply(){
-            this.sortDescending()
-            for(num in this.indices)
-                str[num+mid+1]=this[num]
+            for(num in this.indices) {
+                str[num] = this[num]
+                str[num+mid+1] = this[(this.size-1)-num]
+            }
         }
     }
     bw.write(str)
