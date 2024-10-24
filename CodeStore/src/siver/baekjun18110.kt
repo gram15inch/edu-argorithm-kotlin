@@ -2,7 +2,7 @@ package siver
 
 import java.io.StreamTokenizer
 import kotlin.math.abs
-
+@Suppress("unused")
 private fun baekjun18110() {
 
 

@@ -1,5 +1,6 @@
 package siver
 
+@Suppress("unused")
 fun baekjun25501 (){
 
     val br = System.`in`.bufferedReader()

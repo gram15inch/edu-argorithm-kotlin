@@ -2,7 +2,7 @@ package siver
 
 import java.io.StreamTokenizer
 import kotlin.math.sqrt
-
+@Suppress("unused")
 private fun baekjun17626 (){
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()
