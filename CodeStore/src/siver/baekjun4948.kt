@@ -23,6 +23,7 @@ output>
 각 테스트 케이스에 대해서, n보다 크고, 2n보다 작거나 같은 소수의 개수를 출력한다
 */
 
+@Suppress("unused")
 fun baekjun4948(input: List<String>): List<String> {
 
     val result = mutableListOf<String>()

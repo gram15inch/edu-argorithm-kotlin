@@ -1,5 +1,6 @@
 package siver
 
+@Suppress("unused")
 private fun baekjun10610() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()

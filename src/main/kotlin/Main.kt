@@ -12,37 +12,22 @@ fun main() {
             return nval.toInt()
         }
 
-        val n = getInt()
 
-        fun isPut(array: IntArray, put :Int):Boolean{
-            return false
+        when(br.readLine()){
+            "A+"->{bw.write("4.3")}
+            "A0"->{bw.write("4.0")}
+            "A-"->{bw.write("3.7")}
+            "B+"->{bw.write("3.3")}
+            "B0"->{bw.write("3.0")}
+            "B-"->{bw.write("2.7")}
+            "C+"->{bw.write("2.3")}
+            "C0"->{bw.write("2.0")}
+            "C-"->{bw.write("1.7")}
+            "D+"->{bw.write("1.3")}
+            "D0"->{bw.write("1.0")}
+            "D-"->{bw.write("0.7")}
+            "F"->{bw.write("0.0")}
         }
-
-        fun findCase(chessArr:IntArray, start:Int):Int{
-            for (idx in start..<n){
-                if(isPut(chessArr,start)){
-                    return 0
-                }
-
-                chessArr[idx] = 1
-                findCase(chessArr, idx+1)
-                chessArr[idx] = 0
-
-            }
-
-            return 0
-        }
-
-        fun getChessCase(size:Int):Int{
-            val chessArr = IntArray(size){0}
-
-            return findCase(chessArr,0)
-        }
-
-
-
-        bw.write("${getChessCase(n)}")
-
     }
 
     bw.flush()

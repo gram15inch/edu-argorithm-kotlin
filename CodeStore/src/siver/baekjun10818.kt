@@ -3,6 +3,7 @@ package siver
 import java.io.StreamTokenizer
 import kotlin.math.abs
 
+@Suppress("unused")
 fun baekjun10818() {
     val br = System.`in`.bufferedReader()
     val bw = System.out.bufferedWriter()

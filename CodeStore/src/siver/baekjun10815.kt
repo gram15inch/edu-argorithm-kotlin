@@ -3,6 +3,7 @@ package siver
 import java.util.*
 import kotlin.collections.HashMap
 
+
 @Suppress("unused")
 private fun baekjun10815(){
     val br = System.`in`.bufferedReader()
